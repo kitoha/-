@@ -23,9 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -35,6 +33,7 @@ public class LectureService {
     private final MemberService memberService;
     private final LectureRepository lectureRepository;
     private final MemberLectureRepository memberLectureRepository;
+    private final LectureSorterService lectureSorterService;
 
     @Transactional
     public synchronized BaseResponse<LectureInfoDto> createLecture(LectureRequestDto lectureRequestDto, String name) {
@@ -99,35 +98,8 @@ public class LectureService {
     @Transactional(readOnly = true)
     public BaseResponse<List<LectureInfoDto>> getLectureInfo(int page, int size, SortedStatus sortedStatus) {
         Page<Lecture> lecturePage = lectureRepository.findAll(PageRequest.of(page, size));
-
-        return switch (sortedStatus) {
-            case LATEST -> new BaseResponse<>(ResultCode.SUCCESS, getLectureSortedByDesc(lecturePage), "최근 등록순");
-            case APPLICANTS ->
-                    new BaseResponse<>(ResultCode.SUCCESS, getLectureSortedByStudentSize(lecturePage), "신청자 많은 순");
-            case APPLICATION_RATE ->
-                    new BaseResponse<>(ResultCode.SUCCESS, getLectureSortedByStudentSizeRate(lecturePage), "신청률 높은 순");
-        };
-    }
-
-    private List<LectureInfoDto> getLectureSortedByDesc(Page<Lecture> lecturePage) {
-        return lecturePage.stream()
-                .sorted(Comparator.comparingLong(Lecture::getId))
-                .map(LectureConverter::convertToLectureInfo)
-                .collect(Collectors.toList());
-    }
-
-    private List<LectureInfoDto> getLectureSortedByStudentSize(Page<Lecture> lecturePage) {
-        return lecturePage.stream()
-                .sorted(Comparator.comparingInt(Lecture::getApplicantsCount).reversed())
-                .map(LectureConverter::convertToLectureInfo)
-                .collect(Collectors.toList());
-    }
-
-    private List<LectureInfoDto> getLectureSortedByStudentSizeRate(Page<Lecture> lecturePage) {
-        return lecturePage.stream()
-                .sorted(Comparator.comparingDouble(Lecture::getApplicationRate).reversed())
-                .map(LectureConverter::convertToLectureInfo)
-                .collect(Collectors.toList());
+        List<LectureInfoDto> sortedLectures = lectureSorterService.sort(lecturePage, sortedStatus);
+        return new BaseResponse<>(ResultCode.SUCCESS, sortedLectures, "강의 정보 조회가 완료되었습니다.");
     }
 
     private boolean isStudent(MemberShip memberShip) {

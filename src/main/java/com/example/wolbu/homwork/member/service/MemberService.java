@@ -55,7 +55,5 @@ public class MemberService {
 
     public Member getMemberInfoByName(String name) {
         return memberRepository.findByName(name);
-
     }
-
 }

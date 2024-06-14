@@ -38,9 +38,8 @@ public class LectureServiceTest {
 
     @BeforeEach
     public void before(){
-        MemberDto teacher = MemberDto.builder()
-                .name("teacher")
-                .build();
+        MemberDto teacher = new MemberDto();
+        teacher.setName("teacher");
 
         memberService.signup(teacher);
         Member member = memberService.getMemberInfoByName("teacher");
@@ -54,9 +53,8 @@ public class LectureServiceTest {
 
         members = new ArrayList<>();
         for (int i = 1; i <= 3; i++) {
-            MemberDto memberDto = MemberDto.builder()
-                    .name("test" + i)
-                    .build();
+            MemberDto memberDto = new MemberDto();
+            memberDto.setName("test" + i);
             memberService.signup(memberDto);
             members.add(memberService.getMemberInfoByName("test" + i));
         }
