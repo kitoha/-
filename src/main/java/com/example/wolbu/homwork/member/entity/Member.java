@@ -6,14 +6,12 @@ import com.example.wolbu.homwork.lecture.entity.LectureMember;
 import com.example.wolbu.homwork.member.enums.MemberShip;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.Set;
 
 
+@Setter
 @Getter
 @Entity
 @Builder
