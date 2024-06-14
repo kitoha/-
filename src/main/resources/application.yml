@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: wolbu.homwork
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: 'jdbc:h2:mem:testdb'
+    username: dbUser
+    password: test12345
+
+h2:
+  console:
+    enabled: true
+    path: /h2-console
+jwt:
+  secret: 3a345d0dd6391e95a1f93ad7e69ef0c2dbbdee5e26e26631239a643e177e93f2b1752531b703858916a72b7f4c9909d9bf01647ee86051a2ee3febc92edc9c22
