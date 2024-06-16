@@ -30,7 +30,7 @@ public class SecurityConfig {
                         sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorizeRequests) ->
                         authorizeRequests.requestMatchers("/api/member/signup").anonymous()
-                                .requestMatchers("/v1/lecture/**").hasRole("MEMBER")
+                                .requestMatchers("/api/v1/lecture/**").hasRole("MEMBER")
                                 .anyRequest().permitAll())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);

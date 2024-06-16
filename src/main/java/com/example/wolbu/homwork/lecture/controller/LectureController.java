@@ -51,7 +51,7 @@ public class LectureController {
     @GetMapping("/v1/lecture")
     public BaseResponse<List<LectureInfoDto>> getLectures(
             @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "2") int size,
+            @RequestParam(defaultValue = "20") int size,
             @RequestParam(defaultValue = "LATEST") SortedStatus sortedStatus) {
         try {
             return lectureService.getLectureInfo(page, size, sortedStatus);

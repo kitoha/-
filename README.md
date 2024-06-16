@@ -79,12 +79,12 @@ QueryParameter
 ```text
 ex) /api/v1/lecture?page=0&sortedStatus=APPLICATION_RATE
 ```  
-정렬 상태 종류입니다. 위에서부터 최신순, 신청자 순, 신청자 비율입니다.  
+정렬 상태 종류입니다. 위에서부터 최근 등록순, 신청자 많은 순, 신청률 높은 순입니다.  
 ```java
 public enum SortedStatus {
-    LATEST, // 최신순
-    APPLICANTS, // 신청자 순
-    APPLICATION_RATE // 신청자 비율
+    LATEST, // 최근 등록순
+    APPLICANTS, // 신청자 많은 순
+    APPLICATION_RATE // 신청률 높은 순
 }
 ```
 
@@ -178,7 +178,7 @@ Header Value : Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJ0ZXN0IiwiYXV0aCI6IlJPTEVfT
 5번
 http://localhost:8080/api/v1/lecture/enroll  
 
-학생으로 로그인을 한 다음 개설된 강의의 Id값들을 리스트에 담아서 요청합니다. 
+학생으로 로그인을 한 다음 개설된 강의의 Id값들을 리스트에 담아서 요청합니다.  
 그러면 해당 학생은 강의를 수강할 수 있습니다.  
 강의를 이미 수강하고있는 학생은 수강이 중복으로 되지않으며 강의 인원수가 다 차있어도 등록되지않습니다.  
 응답 결과에는 아래와 같이 요청한 강의가 등록이 되었는지 세가지 상태 값으로 응답이 리턴됩니다.  
@@ -193,5 +193,17 @@ RequestBody
 ```json
 {
     "lectureIds" : [1]
+}
+```
+
+6번 http://localhost:8080/api/v1/lecture?sortedStatus=APPLICATION_RATE  
+현재 개설된 강의를 볼 수 있는 요청입니다.  
+한 페이지당 최대 20개의 강의를 볼 수 있습니다.  
+또한, 아래의 정렬 기준대로 바꾸게 되면 최근 등록순, 신청자 많은 순, 신청률 높은 순으로 개설된 강의 정보를 볼 수 있습니다.
+```java
+public enum SortedStatus {
+    LATEST, // 최근 등록순
+    APPLICANTS, // 신청자 많은 순
+    APPLICATION_RATE // 신청률 높은 순
 }
 ```
