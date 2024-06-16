@@ -1,5 +1,6 @@
 package com.example.wolbu.homwork.lecture.service;
 
+import static org.junit.jupiter.api.Assertions.assertIterableEquals;
 import static org.mockito.Mockito.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -85,6 +86,8 @@ public class LectureSorterServiceTest {
 
         // then
         assertEquals(expected.get(0).getLectureId(), actual.get(0).getLectureId());
+        assertEquals(expected.get(1).getLectureId(), actual.get(1).getLectureId());
+        assertEquals(expected.get(2).getLectureId(), actual.get(2).getLectureId());
     }
 
     @Test
@@ -100,5 +103,7 @@ public class LectureSorterServiceTest {
 
         // then
         assertEquals(expected.get(0).getLectureId(), actual.get(0).getLectureId());
+        assertEquals(expected.get(1).getLectureId(), actual.get(1).getLectureId());
+        assertEquals(expected.get(2).getLectureId(), actual.get(2).getLectureId());
     }
 }
